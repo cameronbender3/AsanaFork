@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic;
 
 namespace Asana.Library.Models
 {
@@ -18,6 +19,8 @@ namespace Asana.Library.Models
         public int? Priority { get; set; }
         public bool? IsCompleted { get; set; }
 
+        public DateTime DueDate { get; set; }
+
 
 
         public int Id { get; set; }
@@ -27,7 +30,7 @@ namespace Asana.Library.Models
             return $"[{Id}] {Name} - {Description}";
         }
     }
-    
+
     public class Project
     {
 
@@ -41,7 +44,7 @@ namespace Asana.Library.Models
         public string? Description { get; set; }
 
         public int CompletePercent { get; set; }
-    
+
         public List<ToDo>? ToDos { get; set; } = new List<ToDo>();
 
         public override string ToString()
@@ -49,4 +52,5 @@ namespace Asana.Library.Models
             return $"[{Id}] {Name} - {Description}";
         }
     }
+    
 }

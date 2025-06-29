@@ -46,7 +46,8 @@ namespace Asana
                                 Name = name,
                                 Description = description,
                                 IsCompleted = false,
-                                Id = 0
+                                Id = 0,
+                                DueDate = DateTime.Today
                             });
                             break;
                         case 2:

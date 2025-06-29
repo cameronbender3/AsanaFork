@@ -6,64 +6,94 @@
              NavigatedFrom="ContentPage_NavigatedFrom">
 
     <ScrollView>
-        <VerticalStackLayout
-            Padding="30,0"
-            Spacing="25">
+        <VerticalStackLayout Padding="30,0" Spacing="25">
+
+            <!--Tool Bar for Projects-->
             <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition Height="10*"/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <!-- Tool Bar-->
-                <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition Width="5*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Text="Show Completed Tasks:"/>
-                    <CheckBox Margin="5" Grid.Column="1" IsChecked="{Binding IsShowCompleted}"/>
-                </Grid>
-                <!-- ToDo List-->
-                <ListView
-                Grid.Row="1"
-                ItemsSource="{Binding ToDos}"
-                SelectedItem="{Binding SelectedToDo}"
-                >
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition Width="10*"/>
-                                        <ColumnDefinition/>
-                                    </Grid.ColumnDefinitions>
-                                    <CheckBox IsChecked="{Binding Model.IsCompleted}" Grid.Column="0"/>
-
-                                    <Grid Grid.Column="1">
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <Label TextColor="Red" Grid.Row="0" Text="{Binding Model.Name}"/>
-                                        <Label Grid.Row="1" Text="{Binding Model.Description}"/>
-                                    </Grid>
-
-                                    <Button Grid.Column="2" Text="Delete" Clicked="InLineDeleteClicked" Command="{Binding DeleteCommand}"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <!-- Button Bar -->
-                <VerticalStackLayout Grid.Row="2">
-                    <Button Text="Add New ToDo" Clicked="AddNewClicked"/>
-                    <Button Text="Edit Selected ToDo" Clicked="EditClicked"/>
-                    <Button Text="Delete Selected ToDo" Clicked="DeleteClicked"/>
-                </VerticalStackLayout>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="Show Completed Projects:"/>
+                <CheckBox Margin="5" Grid.Column="1" IsChecked="{Binding IsShowCompletedProject}"/>
             </Grid>
+
+            <!-- PROJECTS SECTION -->
+            <Label Text="Projects" FontAttributes="Bold" FontSize="Medium" Padding="0,10"/>
+            <ListView
+                ItemsSource="{Binding Projects}"
+                SelectedItem="{Binding SelectedProject}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10*"/>         <!-- Didn't add binding for isCompleted on actual projects yet because functionality for toDos doesn't work. Whenever the button is clicked it should refresh-->
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Entry Text="{Binding Model.CompletePercent}" Grid.Column="0"/>
+                                <Label Text="{Binding Model.Name}" Grid.Column="1" FontAttributes="Bold"/>
+                                <Label Text="{Binding Model.Description}" Grid.Column="2"/>
+                                <Button Grid.Column="2" Text="Delete" Clicked="InLineDeleteClicked" Command="{Binding DeleteCommand}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <HorizontalStackLayout>
+                <Button Text="Add New Project" Clicked="AddNewProjectClicked"/>
+                <Button Text="Edit Selected Project" Clicked="EditProjectClicked"/>
+                <Button Text="Delete Selected Project" Clicked="DeleteProjectClicked"/>
+            </HorizontalStackLayout>
+
+            <Button Text="See ToDos in a Project"  Clicked="OpenProjectClicked"/>
+
+            <!-- TOOL BAR for ToDos -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Text="Show Completed Tasks:"/>
+                <CheckBox Margin="5" Grid.Column="1" IsChecked="{Binding IsShowCompleted}"/>
+            </Grid>
+
+            <!-- ToDo List -->
+            <Label Text="ToDos" FontAttributes="Bold" FontSize="Medium" Padding="0,10"/>
+            <ListView
+                ItemsSource="{Binding ToDos}"
+                SelectedItem="{Binding SelectedToDo}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="10*"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <CheckBox IsChecked="{Binding Model.IsCompleted}" Grid.Column="0"/>
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <Label TextColor="Red" Grid.Row="0" Text="{Binding Model.Name}"/>
+                                    <Label Grid.Row="1" Text="{Binding Model.Description}"/>
+                                </Grid>
+                                <Button Grid.Column="2" Text="Delete" Clicked="InLineDeleteClicked" Command="{Binding DeleteCommand}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <HorizontalStackLayout>
+                <Button Text="Add New ToDo" Clicked="AddNewClicked"/>
+                <Button Text="Edit Selected ToDo" Clicked="EditClicked"/>
+                <Button Text="Delete Selected ToDo" Clicked="DeleteClicked"/>
+            </HorizontalStackLayout>
+            <Button Text="Refresh Page" Clicked="InLineDeleteClicked"/>
         </VerticalStackLayout>
     </ScrollView>
-
 </ContentPage>

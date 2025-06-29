@@ -1,0 +1,88 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Asana.Maui.Views.ToDosInProjectView"
+             Title="ToDos In Project"
+             NavigatedFrom="ContentPage_NavigatedFrom"
+             NavigatedTo="ContentPage_NavigatedTo">
+
+    <Grid RowSpacing="18" Padding="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Project Details -->
+            <RowDefinition Height="*"/>    <!-- ToDos List -->
+            <RowDefinition Height="Auto"/> <!-- Add ToDo Section -->
+            <RowDefinition Height="Auto"/> <!-- Buttons -->
+        </Grid.RowDefinitions>
+        
+        <!-- Project Info -->
+        <StackLayout Grid.Row="0">
+            <Label Text="Project Details" FontSize="Title" FontAttributes="Bold"/>
+            <Grid ColumnSpacing="10" RowSpacing="8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Text="ID:" Grid.Row="0" Grid.Column="0"/>
+                <Entry Text="{Binding ProjectId}" Grid.Row="0" Grid.Column="1" IsReadOnly="True"/>
+                <Label Text="Name:" Grid.Row="1" Grid.Column="0"/>
+                <Entry Text="{Binding ProjectName}" Grid.Row="1" Grid.Column="1" IsReadOnly="True"/>
+                <Label Text="Description:" Grid.Row="2" Grid.Column="0"/>
+                <Entry Text="{Binding ProjectDescription}" Grid.Row="2" Grid.Column="1" IsReadOnly="True"/>
+            </Grid>
+        </StackLayout>
+
+        <!-- ToDos List -->
+        <ListView Grid.Row="1"
+                  ItemsSource="{Binding ToDos}"
+                  VerticalOptions="FillAndExpand">
+            <ListView.Header>
+                <Label Text="ToDos In This Project:" FontSize="Medium" FontAttributes="Bold"/>
+            </ListView.Header>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid ColumnSpacing="10" Padding="5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Text="{Binding Model.Name}" FontAttributes="Bold" Grid.Column="0"/>
+                            <Label Text="{Binding Model.Description}" Grid.Column="1"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <!-- Add New ToDo Section -->
+<!-- ToDo input section for Name, Description, Priority, DueDate, and Ok button -->
+        <Grid Grid.Row="2" ColumnSpacing="10" Padding="0,10,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="4*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Entry Grid.Column="0" Placeholder="ToDo Name" Text="{Binding NewToDoName}" />
+            <Entry Grid.Column="1" Placeholder="ToDo Description" Text="{Binding NewToDoDescription}" />
+            <Picker Grid.Column="2"
+                    ItemsSource="{Binding Priorities}"
+                    SelectedItem="{Binding NewToDoPriority}"/>
+            <DatePicker Grid.Column="3"
+                        Date="{Binding NewToDoDueDate}" />
+        </Grid>
+
+
+        <!-- Buttons -->
+        <StackLayout Grid.Row="3" Orientation="Horizontal" Spacing="10">
+            <Button Text="Add ToDo" Clicked="AddToDoClicked" HorizontalOptions="FillAndExpand"/>
+            <Button Text="Cancel" Clicked="CancelClicked" HorizontalOptions="FillAndExpand"/>
+        </StackLayout>
+    </Grid>
+</ContentPage>
