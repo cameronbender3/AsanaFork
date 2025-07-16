@@ -19,7 +19,8 @@ public partial class ToDosInProjectView : ContentPage
 	private void AddToDoClicked(object sender, EventArgs e)
 	{
 		(BindingContext as ToDosInProjectViewModel)?.AddToDo();
-     }
+		(BindingContext as ToDosInProjectViewModel)?.HandleAddToDoClicked();
+    }
 
     private void ContentPage_NavigatedFrom(object sender, NavigatedFromEventArgs e)
     {

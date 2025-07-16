@@ -37,17 +37,6 @@
             <Label Text="Description: " Grid.Column="0"/>
             <Entry Text="{Binding Model.Description}" Grid.Column="1"/>
         </Grid>
-        <!-- Optional: Due Date, if you have it -->
-        <!--
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="10*"/>
-            </Grid.ColumnDefinitions>
-            <Label Text="Due by: " Grid.Column="0"/>
-            <DatePicker Grid.Column="1" Date="{Binding Model.DueDate}" />
-        </Grid>
-        -->
         <Button Text="Ok" Clicked="OkClicked"/>
         <Button Text="Cancel" Clicked="CancelClicked"/>
     </VerticalStackLayout>

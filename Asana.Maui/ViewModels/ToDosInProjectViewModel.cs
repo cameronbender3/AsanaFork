@@ -106,12 +106,19 @@ public class ToDosInProjectViewModel
 			ToDos.Add(new ToDoDetailViewModel(addedToDo));
 		}
 
+	}
+
+
+	public void HandleAddToDoClicked()
+	{
 		NewToDoName = string.Empty;
 		NewToDoDescription = string.Empty;
 		NewToDoPriority = 4;
 		NewToDoDueDate = DateTime.Today;
+		NotifyPropertyChanged(); //  maybe 
 	}
-
+	//need to make this a query maybe 
+	
 	public void RefreshPage()
 	{
 		NotifyPropertyChanged(nameof(ToDos));
