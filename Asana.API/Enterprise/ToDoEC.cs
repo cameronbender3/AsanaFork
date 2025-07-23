@@ -25,14 +25,14 @@ namespace Asana.API.Enterprise
             var toDoToDelete = GetById(id);
             if (toDoToDelete != null)
             {
-                //Filebase.Current.Delete(toDoToDelete);
+                FakeDatabase.Current.DeleteToDo(toDoToDelete);
             }
             return toDoToDelete;
         }
 
         public ToDo? AddOrUpdate(ToDo? toDo)
         {
-            Filebase.Current.AddOrUpdate(toDo);
+            FakeDatabase.Current.AddOrUpdateToDo(toDo);
             return toDo;
         }
     }

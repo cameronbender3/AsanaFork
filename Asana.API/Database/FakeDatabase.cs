@@ -38,7 +38,7 @@ namespace Asana.API.Database
 
             nextKeys = new Dictionary<DataType, int>();
             nextKeys.Add(DataType.ToDo, 5);
-            nextKeys.Add(DataType.Project, 3);
+            nextKeys.Add(DataType.Project, 6);
         }
 
         public List<Project>? GetProjects(bool Expand = false)
@@ -65,7 +65,7 @@ namespace Asana.API.Database
 
             if (toDoToAdd.Id <= 0)
             {
-                toDoToAdd.Id = nextKeys[DataType.ToDo]++;
+                toDoToAdd.Id = ++nextKeys[DataType.ToDo];
                 toDos.Add(toDoToAdd);
             }
             else
@@ -100,18 +100,33 @@ namespace Asana.API.Database
 
             if (projectToAdd.Id <= 0)
             {
-                projectToAdd.Id = nextKeys[DataType.Project]++;
+                projectToAdd.Id = ++nextKeys[DataType.Project];
                 projects.Add(projectToAdd);
+
+                // if project has any todo's then link the todo to the project 
+                // and add the todo to the overall to do list.
+                //need to make the project id = the project 
+                //the ToDo id is not being set 
             }
             else
             {
-                var oldToDo = toDos.FirstOrDefault(t => t.Id == projectToAdd.Id);
-                if (oldToDo != null)
+                var oldProject = projects.FirstOrDefault(t => t.Id == projectToAdd.Id);
+                if (oldProject != null)
                 {
-                    toDos.Remove(oldToDo);
+                    projects.Remove(oldProject);
                 }
                 projects.Add(projectToAdd);
             }
+                    int count = projectToAdd.ToDos.Count;
+                    if (count > 0)
+                    {
+                        for (int i = 0; i < count; i++)
+                        {
+                            projectToAdd.ToDos[i].ProjectId = projectToAdd.Id;
+                            Current.AddOrUpdateToDo(projectToAdd.ToDos[i]);
+                            
+                        }
+                    }
             return projectToAdd;
         }
 
@@ -142,30 +157,6 @@ namespace Asana.API.Database
         }
 
         private Dictionary<DataType, int> nextKeys;
-        /*public static int NextToDoKey
-        {
-            get
-            {
-                if (toDos.Any())
-                {
-                    return toDos.Select(t => t.Id).Max() + 1;
-                }
-                return 1;
-            }
-        }
-
-        public static int NextProjectKey
-        {
-            get
-            {
-                if (projects.Any())
-                {
-                    return projects.Select(t => t.Id).Max() + 1;
-                }
-                return 1;
-            }
-        }*/
-
 
 
     }
