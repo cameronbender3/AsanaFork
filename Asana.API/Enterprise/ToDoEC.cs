@@ -12,7 +12,7 @@ namespace Asana.API.Enterprise
 
         public IEnumerable<ToDo> GetToDos()
         {
-            return FakeDatabase.Current.ToDos.Take(100);
+            return new MsSqlContext().ToDos.Take(100);
         }
 
         public ToDo? GetById(int id)
@@ -20,19 +20,18 @@ namespace Asana.API.Enterprise
             return GetToDos().FirstOrDefault(t => t.Id == id);
         }
 
-        public ToDo? Delete(int id)
+        public int Delete(int id)
         {
-            var toDoToDelete = GetById(id);
-            if (toDoToDelete != null)
+            if (id > 0)
             {
-                FakeDatabase.Current.DeleteToDo(toDoToDelete);
+                return new MsSqlContext().DeleteToDo(id);
             }
-            return toDoToDelete;
+            return -1;
         }
 
         public ToDo? AddOrUpdate(ToDo? toDo)
         {
-            FakeDatabase.Current.AddOrUpdateToDo(toDo);
+            new MsSqlContext().AddOrUpdateToDo(toDo);
             return toDo;
         }
     }

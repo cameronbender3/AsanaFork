@@ -16,7 +16,7 @@ namespace Asana.API.Controllers
         [HttpGet("Expand")]
         public IEnumerable<Project>? GetExpand()
         {
-            return new ProjectEC().Get(true);
+            return new ProjectEC().ExpandProjects();
         }
         [HttpGet("{id}")]
         public Project? GetById(int id)
@@ -25,7 +25,7 @@ namespace Asana.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public Project? Delete(int id)
+        public int? Delete(int id)
         {
             return new ProjectEC().Delete(id);
         }
